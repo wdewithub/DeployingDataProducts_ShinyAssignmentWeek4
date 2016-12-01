@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ozone calculator pitch</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Ozone calculator pitch">
+  <meta name="author" content="Wendy De Wit">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Ozone calculator pitch</h1>
+    <h2></h2>
+    <p>Wendy De Wit<br/></p>
+  </hgroup>
+    <a href="https://github.com/wdewithub/DeployingDataProducts_ShinyAssignmentWeek4/zipball/gh-pages" class="example">
+     Download
+    </a>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The fundaments of my ozone calculator</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The ozone calculator was built using the airquality dataset in R. The airquality dataset has daily observations on:</p>
+
+<ol>
+<li>ozone concentration (in ppb)</li>
+<li>wind speed (in mph)</li>
+<li>temperature (in Fahrenheit)</li>
+<li>solar radiation (in lang)</li>
+</ol>
+
+<p>measured in New York between May 1, 1973 and September 30, 1973.</p>
+
+<p>We fitted a linear regression model predicting the ozone concentration dependent on the 3 other weather elements. This model could then be used to predict ozone concentration given user input on wind, temperature and solar radiation. </p>
+
+<p>However, as information on expected solar radiation might be difficult to find, we also fitted a second linear model predicting solar radiation depending on the month and temperature. This way a user can simply specifiy the month, wind speed and temperature and still get an estimate about the expected ozone concentration.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Predicting solar radiation from temperature and month</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">solarfit &lt;- with(completed_airqual,lm(Solar.R~Temp+Month))
+solarfit
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = Solar.R ~ Temp + Month)
+## 
+## Coefficients:
+## (Intercept)         Temp        Month  
+##      50.011        3.057      -14.452
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Predicting ozone from wind, temperature and month</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">modelFit &lt;- with(completed_airqual,lm(log(Ozone)~ Temp+Solar.R+Wind))
+modelFit
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = log(Ozone) ~ Temp + Solar.R + Wind)
+## 
+## Coefficients:
+## (Intercept)         Temp      Solar.R         Wind  
+##   -0.269940     0.048627     0.002267    -0.048949
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Evaluating the ozone prediction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The predicted ozone concentration is also evaluated on its impact on human health:</p>
+
+<ol>
+<li>green: &lt; 100 ppb, safe ozone level</li>
+<li>yellow: 100-500 ppb, ozone level with minor health risks (eye, nose, throat irritation, shortness of breatch)</li>
+<li>orange: 500-1000 ppb, ozone level with strong health risks (breathing disorders, chest pain, dry cough, severe fatigue)</li>
+<li>red: &gt; 1000 ppb, ozone level with severe health risks (severe pneumonia, headache, ...)</li>
+</ol>
+
+<h3>Enjoy playing around with the calculator and keep an eye on the ozone level in your neighbourhood !</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The fundaments of my ozone calculator'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Predicting solar radiation from temperature and month'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Predicting ozone from wind, temperature and month'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Evaluating the ozone prediction'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
